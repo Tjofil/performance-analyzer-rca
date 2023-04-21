@@ -13,11 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
@@ -181,7 +177,8 @@ public class RcaController {
                 return;
             }
 
-            subscriptionManager.setCurrentLocus(rcaConf.getTagMap().get("locus"));
+            String currentLocus = RcaUtil.getPriorityLocus(rcaConf.getTagMap().get("locus"));
+            subscriptionManager.setCurrentLocus(currentLocus);
             this.connectedComponents = getRcaGraphComponents(rcaConf);
 
             // Mute the rca nodes after the graph creation and before the scheduler start
